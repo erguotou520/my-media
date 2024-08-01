@@ -1,6 +1,6 @@
 import crypto from 'node:crypto'
 import { sql } from 'drizzle-orm'
-import { integer, numeric, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { index, integer, numeric, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 function commonColumns() {
   return {
@@ -35,4 +35,9 @@ export const medias = sqliteTable('medias', {
   userId: text('user_id'),
   // 上传者名称
   userName: text('user_name')
+}, (table) => {
+  return {
+    pathIdx: uniqueIndex("path_idx").on(table.path),
+    createAtIndex: index("create_at_idx").on(table.createdAt),
+  }
 })

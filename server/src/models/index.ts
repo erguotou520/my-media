@@ -1,4 +1,5 @@
-// import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
+import { medias } from '@/db/schema'
+import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
 import { type Static, t } from 'elysia'
 
 export const LoginSchema = t.Object({
@@ -9,3 +10,7 @@ export const LoginSchema = t.Object({
 export type LoginForm = Static<typeof LoginSchema>
 
 export type UserClaims = { id: string; nickname: string }
+
+export const CreateMediaSchema = createInsertSchema(medias)
+
+export type CreateMediaModel = Static<typeof CreateMediaSchema>

@@ -16,7 +16,7 @@ async function buildWithExternals(): Promise<void> {
   })
 
   await Bun.build({
-    entrypoints: ['./src/db/seed.ts', './src/db/drizzle.config.ts', './src/db/schema.ts'],
+    entrypoints: ['./src/db/seed.ts', './src/db/migrate.ts', './src/db/schema.ts'],
     outdir: './dist/db',
     target: 'bun',
     external: externalDeps,
