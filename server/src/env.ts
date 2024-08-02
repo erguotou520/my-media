@@ -8,7 +8,7 @@ const envVariables = z.object({
   JWT_SECRET: z.string(),
   JWT_EXPIRES_IN: z.string().optional().default('7d'),
   // database
-  SQLITE_DB_PATH: z.string().optional().default('./db/media.db'),
+  DATA_PATH: z.string().optional().default('./db'),
   // media scan paths
   // parse from string to array of strings, separated by ,
   MEDIA_SCAN_PATHS: z.string().transform(paths => paths.split(','))

@@ -7,6 +7,7 @@ import { env } from "./env";
 import { logger } from './middlewares/log';
 import type { CreateMediaModel } from "./models";
 import { createCalculateRunTimeHelper } from './performance';
+import { generateRandomUUID } from './utils';
 import { scanDirectory } from "./workers/scanner";
 
 /**
@@ -44,14 +45,14 @@ export async function setup() {
     // 数据库中不存在
     if (!dbMediaMap.has(media.path)) {
       const stats = await stat(media.path)
-      insertMedias.push({ ...media, createdAt: stats.ctime.toLocaleString(), updatedAt: stats.mtime.toLocaleString(), fileSize: stats.size })
+      insertMedias.push({ ...media, id: generateRandomUUID(), createdAt: stats.ctime.toISOString(), updatedAt: stats.mtime.toISOString(), fileSize: stats.size })
     } else {
       // 数据库中已存在
       // 创建时间、更新时间是否相同
       const dbMedia = dbMediaMap.get(media.path) as CreateMediaModel
       const stats = await stat(media.path)
-      if (!dbMedia.updatedAt || stats.mtime !== new Date(dbMedia.updatedAt)) {
-        updateMedias.push({...media, createdAt: stats.ctime.toLocaleString(), updatedAt: stats.mtime.toLocaleString(), fileSize: stats.size })
+      if (!dbMedia.updatedAt || +stats.mtime !== +new Date(dbMedia.updatedAt)) {
+        updateMedias.push({...media, createdAt: stats.ctime.toISOString(), updatedAt: stats.mtime.toISOString(), fileSize: stats.size })
       }
       dbMediaMap.delete(media.path)
     }

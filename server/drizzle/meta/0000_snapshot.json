@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "eda360de-a392-4bf8-9022-048885c82340",
+  "id": "c82198b3-86f5-4eec-aadb-ab49b9f2accf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "medias": {
@@ -13,7 +13,7 @@
           "primaryKey": true,
           "notNull": true,
           "autoincrement": false,
-          "default": "'a7200d73-4079-4300-8e7c-f38ba3d7e4bf'"
+          "default": "'98912c22-d0a7-4491-b7f5-7210182f33d4'"
         },
         "created_at": {
           "name": "created_at",
@@ -59,6 +59,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "altitude": {
+          "name": "altitude",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "width": {
           "name": "width",
           "type": "integer",
@@ -89,7 +96,7 @@
         },
         "duration": {
           "name": "duration",
-          "type": "numeric",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -152,7 +159,7 @@
           "primaryKey": true,
           "notNull": true,
           "autoincrement": false,
-          "default": "'09cb812e-ea91-401c-a374-409ea537fbc7'"
+          "default": "'61235b37-dcc6-4bdb-b161-c2c1f0a54521'"
         },
         "created_at": {
           "name": "created_at",

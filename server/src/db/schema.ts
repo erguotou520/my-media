@@ -1,6 +1,6 @@
 import crypto from 'node:crypto'
 import { sql } from 'drizzle-orm'
-import { index, integer, numeric, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { index, integer, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 function commonColumns() {
   return {
@@ -24,11 +24,14 @@ export const medias = sqliteTable('medias', {
   thumbnailPath: text('thumbnail_path'),
   latitude: text('latitude'),
   longitude: text('longitude'),
+  // gps高度
+  altitude: text('altitude'),
   width: integer('width'),
   height: integer('height'),
   fileSize: integer('file_size'),
   mediaType: text('media_type', { enum: ['photo', 'video'] }),
-  duration: numeric('duration'),
+  // 视频时长，单位ms
+  duration: integer('duration'),
   // 文件hash值，用于重复文件校验
   fileHash: text('file_hash'),
   // 上传者id

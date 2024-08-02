@@ -18,7 +18,7 @@ export async function updateMany<TTable extends SQLiteTable>(table: TTable, prim
   for (const item of values) {
     await db.update(table).set(item.data)
       // @ts-ignore
-      .where(eq(item[primaryKey], item.key))
+      .where(eq(table[primaryKey], item.key))
   }
 }
 
@@ -27,7 +27,7 @@ export async function deleteMany<TTable extends SQLiteTable>(table: TTable, prim
   const queue = createListQueue(valueList, 100)
   for (const item of queue) {
     // @ts-ignore
-    await db.delete(table).where(inArray(item[primaryKey], item))
+    await db.delete(table).where(inArray(table[primaryKey], item))
   }
 }
 
