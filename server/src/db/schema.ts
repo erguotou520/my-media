@@ -1,6 +1,6 @@
 import crypto from 'node:crypto'
 import { sql } from 'drizzle-orm'
-import { index, integer, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { index, integer, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 function commonColumns() {
   return {
@@ -22,10 +22,10 @@ export const medias = sqliteTable('medias', {
   ...commonColumns(),
   path: text('path').notNull().unique(),
   thumbnailPath: text('thumbnail_path'),
-  latitude: text('latitude'),
-  longitude: text('longitude'),
+  latitude: real('latitude'),
+  longitude: real('longitude'),
   // gps高度
-  altitude: text('altitude'),
+  altitude: real('altitude'),
   width: integer('width'),
   height: integer('height'),
   fileSize: integer('file_size'),

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "c82198b3-86f5-4eec-aadb-ab49b9f2accf",
+  "id": "eead9ecb-49c2-44f6-b2e8-fc5e7517f085",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "medias": {
@@ -13,7 +13,7 @@
           "primaryKey": true,
           "notNull": true,
           "autoincrement": false,
-          "default": "'98912c22-d0a7-4491-b7f5-7210182f33d4'"
+          "default": "'ed148798-b583-41b0-8aa3-81181cbedec7'"
         },
         "created_at": {
           "name": "created_at",
@@ -47,21 +47,21 @@
         },
         "latitude": {
           "name": "latitude",
-          "type": "text",
+          "type": "real",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "longitude": {
           "name": "longitude",
-          "type": "text",
+          "type": "real",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "altitude": {
           "name": "altitude",
-          "type": "text",
+          "type": "real",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -159,7 +159,7 @@
           "primaryKey": true,
           "notNull": true,
           "autoincrement": false,
-          "default": "'61235b37-dcc6-4bdb-b161-c2c1f0a54521'"
+          "default": "'4059cd1b-7a24-4289-bb8c-8621ead2a0b9'"
         },
         "created_at": {
           "name": "created_at",

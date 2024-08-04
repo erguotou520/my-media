@@ -1,11 +1,13 @@
 import { basename, dirname } from "node:path";
 import { logger } from "@/middlewares/log";
-import { exiftool } from "exiftool-vendored";
+import type { CreateMediaModel } from "@/models";
 import ffmpeg from "fluent-ffmpeg";
 
 export function getVideoThumbnail(
 	videoPath: string,
 	thumbnailPath: string,
+	width: number,
+	height: number,
 ): Promise<string> {
 	const thumbnailDir = dirname(thumbnailPath);
 	const thumbnailName = basename(thumbnailPath);
@@ -22,37 +24,40 @@ export function getVideoThumbnail(
 				timestamps: [1],
 				filename: thumbnailName,
 				folder: thumbnailDir,
-				size: "320x240",
-			});
-	});
+				size: width > height ? '240x?' : "?x240",
+			})
+	})
 }
 
 export function getVideoMetadata(
 	videoPath: string,
-): Promise<{
-	duration: number | undefined;
-	width: number | undefined;
-	height: number | undefined;
-}> {
+): Promise<Partial<CreateMediaModel>> {
 	return new Promise((resolve) => {
 		ffmpeg.ffprobe(videoPath, (err, metadata) => {
 			if (err) {
 				resolve({ duration: undefined, width: undefined, height: undefined });
 			} else {
 				const duration = metadata.format.duration;
+				const location = metadata.format.tags?.location as string | undefined;
+				let latitude: number | undefined;
+				let longitude: number | undefined;
+				if (location) {
+					const match = location.match(/^\+([\d.]+)\+([\d.]+)\//)
+					if (match) {
+						latitude = Number.parseFloat(match[1]);
+						longitude = Number.parseFloat(match[2]);
+					}
+				}
 				const stream = metadata.streams[0];
 				resolve({
 					duration,
 					width: stream?.width,
 					height: stream?.height,
+					latitude,
+					longitude,
 				});
 			}
 		});
 	});
 }
 
-export function getVideoLocation(videoPath: string) {
-	exiftool.read(videoPath, { geolocation: true }).then((data) => {
-		console.log(data);
-	});
-}

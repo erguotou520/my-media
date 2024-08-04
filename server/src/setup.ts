@@ -1,5 +1,6 @@
 import { stat } from 'node:fs/promises'
 
+import { eq } from 'drizzle-orm';
 import { db } from "./db";
 import { medias } from "./db/schema";
 import { deleteMany, insertMany, updateMany } from './db/seq';
@@ -8,6 +9,7 @@ import { logger } from './middlewares/log';
 import type { CreateMediaModel } from "./models";
 import { createCalculateRunTimeHelper } from './performance';
 import { generateRandomUUID } from './utils';
+import { getMediaInfo } from './workers/info';
 import { scanDirectory } from "./workers/scanner";
 
 /**
@@ -77,4 +79,22 @@ export async function setup() {
     await updateMany(medias, 'path', updateMedias.map(m => ({ key: m.path, data: m })))
   }
   finishDBSync()
+
+  // 需要重新获取媒体信息的列表
+  // const refreshMedias = [...insertMedias, ...updateMedias]
+  const refreshMedias = [...currentMedias]
+  if (refreshMedias.length) {
+    for (const media of refreshMedias) {
+      const finishInfo = createCalculateRunTimeHelper(time => {
+        logger.info('媒体 %s 信息刷新完成，耗时: %sms', media.path, time)
+      })
+      try {
+        const info = await getMediaInfo(media)
+        await db.update(medias).set({ ...info, updatedAt: new Date().toISOString() }).where(eq(medias.path, media.path))
+      } catch (error) {
+        logger.error('媒体 %s 信息刷新失败: %s', media.path, error)
+      }
+      finishInfo()
+    }
+  }
 }
