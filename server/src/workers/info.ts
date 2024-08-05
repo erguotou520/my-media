@@ -25,7 +25,7 @@ export async function getMediaInfo(
 		const finishMetadata = createCalculateRunTimeHelper((time) => {
 			logger.info("文件 %s 获取元数据耗时：%sms", media.path, time);
 		});
-		const { duration, width, height } = await getVideoMetadata(media.path);
+		const { duration, width, height, latitude, longitude, altitude } = await getVideoMetadata(media.path);
 		finishMetadata();
 		const finishThumbnail = createCalculateRunTimeHelper((time) => {
 			logger.info("文件 %s 生成缩略图耗时：%sms", media.path, time);
@@ -39,6 +39,9 @@ export async function getMediaInfo(
 			width,
 			height,
 			thumbnailPath,
+			latitude,
+			longitude,
+			altitude
 		};
 	}
 	// 生成缩略图
