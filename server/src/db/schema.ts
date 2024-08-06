@@ -26,6 +26,8 @@ export const medias = sqliteTable('medias', {
   longitude: real('longitude'),
   // gps高度
   altitude: real('altitude'),
+  // 地址信息是否已读取
+  gpsInfoRead: integer('gps_info_read', { mode: 'boolean' }).default(false),
   width: integer('width'),
   height: integer('height'),
   fileSize: integer('file_size'),

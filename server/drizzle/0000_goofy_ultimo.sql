@@ -1,5 +1,5 @@
 CREATE TABLE `medias` (
-	`id` text PRIMARY KEY DEFAULT 'ed148798-b583-41b0-8aa3-81181cbedec7' NOT NULL,
+	`id` text PRIMARY KEY DEFAULT '55d9d7fb-25bc-48a0-9730-58af48c55f37' NOT NULL,
 	`created_at` text DEFAULT (datetime('now', 'localtime')),
 	`updated_at` text DEFAULT (datetime('now', 'localtime')),
 	`path` text NOT NULL,
@@ -7,6 +7,7 @@ CREATE TABLE `medias` (
 	`latitude` real,
 	`longitude` real,
 	`altitude` real,
+	`gps_info_read` integer DEFAULT false,
 	`width` integer,
 	`height` integer,
 	`file_size` integer,
@@ -18,7 +19,7 @@ CREATE TABLE `medias` (
 );
 --> statement-breakpoint
 CREATE TABLE `users` (
-	`id` text PRIMARY KEY DEFAULT '4059cd1b-7a24-4289-bb8c-8621ead2a0b9' NOT NULL,
+	`id` text PRIMARY KEY DEFAULT '8aeafa40-9c7e-450a-885b-372bbf488fde' NOT NULL,
 	`created_at` text DEFAULT (datetime('now', 'localtime')),
 	`updated_at` text DEFAULT (datetime('now', 'localtime')),
 	`username` text NOT NULL,

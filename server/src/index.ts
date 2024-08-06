@@ -4,7 +4,7 @@ import { routes } from '@/routes'
 import { staticPlugin } from '@elysiajs/static'
 import { swagger } from '@elysiajs/swagger'
 import type { BunFile } from 'bun'
-import { Elysia, t } from 'elysia'
+import { Elysia } from 'elysia'
 import { setup } from './setup'
 
 setup().then(() => {

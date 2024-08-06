@@ -53,7 +53,7 @@ export async function setup() {
       // 创建时间、更新时间是否相同
       const dbMedia = dbMediaMap.get(media.path) as CreateMediaModel
       const stats = await stat(media.path)
-      if (!dbMedia.updatedAt || +stats.mtime !== +new Date(dbMedia.updatedAt)) {
+      if (!dbMedia.updatedAt || +stats.mtime !== +new Date(dbMedia.updatedAt) || !media.fileHash || !media.gpsInfoRead || !media.width || !media.thumbnailPath) {
         updateMedias.push({...media, createdAt: stats.ctime.toISOString(), updatedAt: stats.mtime.toISOString(), fileSize: stats.size })
       }
       dbMediaMap.delete(media.path)
@@ -81,8 +81,8 @@ export async function setup() {
   finishDBSync()
 
   // 需要重新获取媒体信息的列表
-  // const refreshMedias = [...insertMedias, ...updateMedias]
-  const refreshMedias = [...currentMedias]
+  const refreshMedias = [...insertMedias, ...updateMedias]
+  // const refreshMedias = [...currentMedias]
   if (refreshMedias.length) {
     for (const media of refreshMedias) {
       const finishInfo = createCalculateRunTimeHelper(time => {
