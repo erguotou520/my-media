@@ -6,6 +6,7 @@ import { createCalculateRunTimeHelper } from "@/performance";
 import { generateRandomUUID } from "@/utils";
 import { getPhotoMetadata, getPhotoThumbnail } from "./photo";
 import { getVideoMetadata, getVideoThumbnail } from "./video";
+import { thumbnailDir } from "@/utils/path";
 
 export async function getMediaInfo(
 	media: Pick<CreateMediaModel, "path" | "mediaType">,
@@ -15,11 +16,7 @@ export async function getMediaInfo(
 	});
 	const hash = await getFileHash(media.path);
 	finishHash();
-	const thumbnailPath = join(
-		env.DATA_PATH,
-		"thumbnails",
-		`${generateRandomUUID()}.jpg`,
-	);
+	const thumbnailPath = join(thumbnailDir, `${generateRandomUUID()}.webp`);
 	if (media.mediaType === "video") {
 		// 获取视频时长、分辨率等信息
 		const finishMetadata = createCalculateRunTimeHelper((time) => {

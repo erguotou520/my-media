@@ -7,6 +7,13 @@ export const LoginSchema = t.Object({
   password: t.String()
 })
 
+export const CommonPaginationSchema = t.Object({
+  skip: t.Number(),
+  limit: t.Number()
+})
+
+export type CommonPaginationType = Static<typeof CommonPaginationSchema>
+
 export type LoginForm = Static<typeof LoginSchema>
 
 export type UserClaims = { id: string; nickname: string }

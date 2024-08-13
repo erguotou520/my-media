@@ -4,6 +4,7 @@ import type { UserClaims } from '@/models'
 import { bearer } from '@elysiajs/bearer'
 import Elysia from 'elysia'
 import { loginRoute } from './login'
+import { mediaRoute } from './media'
 
 export const routes = new Elysia()
   .get('/health', () => 'ok', { detail: { summary: '健康检查' } })
@@ -18,7 +19,7 @@ export const routes = new Elysia()
           return 'Unauthorized'
         }
       })
-      
+      .use(mediaRoute)
       .get('/me', async ({ bearer }) => (await verify(bearer!, env.JWT_SECRET)) as UserClaims, {
         detail: { summary: '获取当前用户信息' }
       })

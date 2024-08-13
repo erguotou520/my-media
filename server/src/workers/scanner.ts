@@ -4,9 +4,7 @@ import { extname, join } from 'node:path';
 
 import { logger } from '@/middlewares/log';
 import type { CreateMediaModel } from '@/models';
-
-const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.svg', '.webp', '.ico', '.apng'])
-const VIDEO_EXTENSIONS = new Set(['.mp4', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.webm', '.vob', '.m4v'])
+import { IMAGE_EXTENSIONS, VIDEO_EXTENSIONS } from '@/utils/path';
 
 export async function scanDirectory(dir: string): Promise<CreateMediaModel[]> {
   const result: CreateMediaModel[] = []

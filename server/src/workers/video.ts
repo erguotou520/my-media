@@ -26,6 +26,7 @@ export function getVideoThumbnail(
 				folder: thumbnailDir,
 				size: width > height ? '240x?' : "?x240",
 			})
+			.toFormat('webp')
 	})
 }
 

@@ -6,6 +6,7 @@ import { swagger } from '@elysiajs/swagger'
 import type { BunFile } from 'bun'
 import { Elysia } from 'elysia'
 import { setup } from './setup'
+import { thumbnailDir, thumbnailRoutePrefix } from './utils/path'
 
 setup().then(() => {
   logger.info('😃 Server setup complete')
@@ -15,8 +16,9 @@ const app = new Elysia()
   .use(loggerMiddleware)
   .use(swagger({ scalarCDN: 'https://cdnjs.cloudflare.com/ajax/libs/scalar-api-reference/1.16.2/standalone.min.js' }))
   .use(staticPlugin({ assets: 'html', prefix: '', noCache: true }))
+  .use(staticPlugin({ assets: thumbnailDir, prefix: thumbnailRoutePrefix, noCache: true }))
   .use(routes)
-  .onError(async ({ code }) => {
+  .onError(async ({ code, ...rest }) => {
     if (code === 'NOT_FOUND') {
       const file = Bun.file('html/index.html')
       const etag = await generateETag(file)
@@ -26,6 +28,8 @@ const app = new Elysia()
           'Cache-Control': 'public, max-age=86400'
         }
       })
+    } else {
+      console.error(code, rest)
     }
   })
   .listen(env.PORT || 3001, server => {
