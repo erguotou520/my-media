@@ -28,9 +28,8 @@ const app = new Elysia()
           'Cache-Control': 'public, max-age=86400'
         }
       })
-    } else {
-      console.error(code, rest)
     }
+    console.error(code, rest)
   })
   .listen(env.PORT || 3001, server => {
     // emoji

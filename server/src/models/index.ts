@@ -19,5 +19,7 @@ export type LoginForm = Static<typeof LoginSchema>
 export type UserClaims = { id: string; nickname: string }
 
 export const CreateMediaSchema = createInsertSchema(medias)
-
 export type CreateMediaModel = Static<typeof CreateMediaSchema>
+
+export const SelectMediaModel = createSelectSchema(medias)
+export type SelectMediaModelType = Static<typeof SelectMediaModel>

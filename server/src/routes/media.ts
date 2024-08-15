@@ -3,12 +3,10 @@ import { findMediaByPath } from '@/services/media'
 import Elysia, { t } from 'elysia'
 
 export const mediaRoute = new Elysia({ prefix: '/media' })
-  .get('/list/dirs', async ({ set }) => {
-    // return {
-    //   data: env.MEDIA_SCAN_PATHS
-    // }
-    set.status = 200
-    return '123'
+  .get('/list/dirs', async () => {
+    return {
+      data: env.MEDIA_SCAN_PATHS
+    }
   })
   .get('/list/path',
     async ({ query, headers }) => {
